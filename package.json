@@ -44,5 +44,14 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "glob": "^10.3.10",
+    "rimraf": "^5.0.5",
+    "@humanwhocodes/object-schema": "^2.0.3",
+    "@humanwhocodes/config-array": "^0.13.0",
+    "inflight": "^1.0.6",
+    "gauge": "^4.0.4",
+    "are-we-there-yet": "^3.0.1"
   }
 }
