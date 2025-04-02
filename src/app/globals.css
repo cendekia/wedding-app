@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: var(--font-inter);
+    --font-dancing: var(--font-dancing);
+    
+    /* Light theme variables - Romantic Wedding Colors */
+    --background: 0 0% 100%;
+    --foreground: 342 35% 25%;
+    
+    /* Soft Blush as primary */
+    --primary: 351 89% 76%;  
+    --primary-foreground: 342 35% 25%;
+    
+    /* Gold accent */
+    --secondary: 43 96% 56%;  
+    --secondary-foreground: 342 35% 25%;
+    
+    /* Soft backgrounds */
+    --accent: 351 100% 96%;
+    --accent-foreground: 342 35% 25%;
+    
+    /* Lighter elements */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 342 14% 45%;
+    
+    /* Other UI elements */
+    --card: 0 0% 100%;
+    --card-foreground: 342 35% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 342 35% 25%;
+    --border: 342 5% 90%;
+    --input: 342 5% 90%;
+    --ring: 351 89% 76%;
+    
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme variables - Elegant Wedding Colors */
+    --background: 342 30% 10%;
+    --foreground: 342 5% 95%;
+    
+    /* Rose Gold as primary */
+    --primary: 349 60% 68%;  
+    --primary-foreground: 342 60% 10%;
+    
+    /* Gold accent */
+    --secondary: 43 70% 58%;  
+    --secondary-foreground: 342 60% 10%;
+    
+    /* Darker accents */
+    --accent: 342 50% 25%;
+    --accent-foreground: 342 5% 95%;
+    
+    /* Darker elements */
+    --muted: 342 30% 20%;
+    --muted-foreground: 342 5% 70%;
+    
+    /* Other UI elements */
+    --card: 342 25% 15%;
+    --card-foreground: 342 5% 95%;
+    --popover: 342 25% 15%;
+    --popover-foreground: 342 5% 95%;
+    --border: 342 15% 30%;
+    --input: 342 15% 30%;
+    --ring: 349 60% 68%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utilities */
+.font-dancing {
+  font-family: var(--font-dancing);
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

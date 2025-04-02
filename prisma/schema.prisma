@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          Role      @default(GUEST)
+  token         String?   @unique
+  tokenExpiresAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  photos        Photo[]
+}
+
+// Wedding event model
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  date        DateTime
+  locationId  String
+  location    Location  @relation(fields: [locationId], references: [id])
+  type        EventType
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  rsvps       RSVP[]
+}
+
+// Location model
+model Location {
+  id          String  @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  zipCode     String?
+  country     String
+  latitude    Float?
+  longitude   Float?
+  events      Event[]
+}
+
+// Guest model
+model Guest {
+  id                 String   @id @default(uuid())
+  name               String
+  email              String?
+  phone              String?
+  invitationCode     String   @unique
+  plusOneAllowed     Boolean  @default(false)
+  dietaryRestrictions String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  rsvps              RSVP[]
+}
+
+// RSVP model
+model RSVP {
+  id                 String         @id @default(uuid())
+  guestId            String
+  guest              Guest          @relation(fields: [guestId], references: [id])
+  eventId            String
+  event              Event          @relation(fields: [eventId], references: [id])
+  status             AttendanceStatus
+  numberOfGuests     Int            @default(1)
+  dietaryRestrictions String?
+  notes              String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@unique([guestId, eventId])
+}
+
+// Photo model
+model Photo {
+  id          String   @id @default(uuid())
+  url         String
+  thumbnail   String
+  title       String?
+  description String?
+  uploadedAt  DateTime @default(now())
+  uploadedById String
+  uploadedBy  User     @relation(fields: [uploadedById], references: [id])
+}
+
+// Registry item model
+model RegistryItem {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Float?
+  url         String?
+  imageUrl    String?
+  purchased   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Enums
+enum Role {
+  ADMIN
+  GUEST
+}
+
+enum EventType {
+  CEREMONY
+  RECEPTION
+  OTHER
+}
+
+enum AttendanceStatus {
+  ATTENDING
+  NOT_ATTENDING
+  PENDING
+}
